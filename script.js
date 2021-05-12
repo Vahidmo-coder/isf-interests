@@ -23,6 +23,7 @@ const formTimeline = document.querySelector('.form__timeline');
 const inputTimeline = document.querySelector('.form__input--timeline');
 const loader = document.querySelector('.loader');
 const mapError = document.querySelector('.map__error');
+const myPosition = document.querySelector('.my_position');
 
 class Interest {
   id = Date.now();
@@ -47,6 +48,7 @@ class Interest {
 /////////////////////////////////
 // architecture
 class App {
+  #myPos;
   #sorted = [];
   #popup;
   #popups = [];
@@ -155,13 +157,14 @@ class App {
     form.addEventListener('submit', this._newInterest.bind(this));
     // logo.addEventListener('click', this._clearLocalStorage.bind(this));
     containerInterests.addEventListener('click', this._popupPan.bind(this));
-    formSort.addEventListener('click', this._sortInterest.bind(this));
+    formSort.addEventListener('submit', this._sortInterest.bind(this));
     containerInterests.firstElementChild.classList.add('select-color');
     document.addEventListener('click', this._openModal.bind(this));
     modalClose.addEventListener('click', this._closeModal.bind(this));
     overlay.addEventListener('click', this._closeModal.bind(this));
-    formTimeline.addEventListener('click', this._sortInterestDyn.bind(this));
+    formTimeline.addEventListener('submit', this._sortInterestDyn.bind(this));
     document.addEventListener('keyup', this._keyup.bind(this));
+    myPosition.addEventListener('click', this._panMyPosition.bind(this));
   }
 
   _getGeolocation() {
@@ -225,19 +228,15 @@ class App {
   }
 
   _showMyPosition(position) {
-    if (position)
-      L.marker([position.coords.latitude, position.coords.longitude], {
-        icon: new L.Icon({
-          iconUrl:
-            'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
-          shadowUrl:
-            'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-          iconSize: [25, 41],
-          iconAnchor: [12, 41],
-          popupAnchor: [1, -34],
-          shadowSize: [41, 41],
-        }),
-      })
+    if (position) {
+      this.#myPos = L.marker(
+        [position.coords.latitude, position.coords.longitude],
+        {
+          icon: this._createIcon('red'),
+        }
+      );
+
+      this.#myPos
         .bindPopup(
           L.popup({
             maxWidth: 250,
@@ -251,22 +250,31 @@ class App {
         )
         .openPopup(position.coords)
         .addTo(this.#map);
+    }
+  }
+
+  _panMyPosition() {
+    console.log(this.#myPos);
+    if (this.#myPos) {
+      this._panTo(this.#myPos._latlng, this.#closeZoom);
+    }
+    this.#myPos.openPopup();
+  }
+
+  _panTo(coords, zoom) {
+    this.#map
+      .setView(coords, zoom, {
+        animate: true,
+        pan: { duration: 2 },
+      })
+      .panTo(coords);
   }
 
   _showCurMarker() {
     // primary marker
     this.#curMarker?.remove();
     this.#curMarker = L.marker(this.#mapEvent.latlng, {
-      icon: new L.Icon({
-        iconUrl:
-          'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-black.png',
-        shadowUrl:
-          'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34],
-        shadowSize: [41, 41],
-      }),
+      icon: this._createIcon('black'),
     }).addTo(this.#map);
   }
 
@@ -329,15 +337,7 @@ class App {
     if (interest.type === 'recreational') color = 'green';
     if (interest.type === 'art') color = 'violet';
 
-    const icon = new L.Icon({
-      iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-${color}.png`,
-      shadowUrl:
-        'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-      iconSize: [25, 41],
-      iconAnchor: [12, 41],
-      popupAnchor: [1, -34],
-      shadowSize: [41, 41],
-    });
+    const icon = this._createIcon(color);
 
     this.#popup = L.popup({
       maxWidth: 250,
@@ -352,7 +352,9 @@ class App {
       icon: icon,
       riseOnHover: true,
       bubblingMouseEvents: true,
-    })
+    });
+
+    this.#marker
       .addTo(this.#map)
       .bindPopup(this.#popup)
       .setPopupContent(
@@ -361,6 +363,18 @@ class App {
       .openPopup(interest.coords);
 
     this.#markers.push(this.#marker);
+  }
+
+  _createIcon(color) {
+    return new L.Icon({
+      iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-${color}.png`,
+      shadowUrl:
+        'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowSize: [41, 41],
+    });
   }
 
   _renderList(interest) {
@@ -445,12 +459,7 @@ class App {
 
     const interest = this.#interests.find(i => i.id === +target.dataset.id);
 
-    this.#map
-      .setView(interest.coords, this.#closeZoom, {
-        animate: true,
-        pan: { duration: 2 },
-      })
-      .panTo(interest.coords);
+    this._panTo(interest.coords, this.#closeZoom);
 
     this.#marker = this.#markers.find(
       m =>
@@ -558,8 +567,6 @@ class App {
   /////////////////////////////////////////////////// sorting
   _sortInterest(e) {
     e.preventDefault();
-    const target = e.target.closest('.form__input');
-    if (!target) return;
 
     const condition = inputSort.value;
     const dgp = [
@@ -592,8 +599,6 @@ class App {
 
   _sortInterestDyn(e) {
     e.preventDefault();
-    const target = e.target.closest('.form__input');
-    if (!target) return;
 
     const condition = inputTimeline.value;
 
@@ -603,6 +608,12 @@ class App {
       this.#sorted = this.#interests.filter(i => i.era === `${condition}`);
       this._updateUI(this.#sorted);
     }
+    this.#map
+      .setView(interest.coords, this.#closeZoom, {
+        animate: true,
+        pan: { duration: 2 },
+      })
+      .panTo(interest.coords);
   }
 
   _updateUI(arr) {
