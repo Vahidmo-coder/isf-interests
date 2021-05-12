@@ -374,7 +374,7 @@ class App {
   _renderList(interest) {
     let payEmoji;
     if (interest.admission == 'free') payEmoji = '🆓';
-    if (interest.admission == 'paid') payEmoji = '💲';
+    if (interest.admission == 'paid') payEmoji = '💰';
     if (interest.admission == 'no-visit') payEmoji = '⛔';
 
     const dGP = [
@@ -417,7 +417,7 @@ class App {
             }</span>
           </div>
           <div class="interest__details">
-            <span class="interest__icon">${payEmoji === '⛔' ? '' : '⌚'}</span>
+            <span class="interest__icon">${payEmoji === '⛔' ? '' : '🕐'}</span>
             <span class="interest__text">${interest.time}</span>
           </div>
           <div class="interest__details">
