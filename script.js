@@ -608,11 +608,11 @@ class App {
       this._updateUI(this.#sorted);
     }
     this.#map
-      .setView(interest.coords, this.#closeZoom, {
+      .setView(this.#sorted[0].coords, this.#closeZoom, {
         animate: true,
         pan: { duration: 2 },
       })
-      .panTo(interest.coords);
+      .panTo(this.#sorted[0].coords);
   }
 
   _updateUI(arr) {
