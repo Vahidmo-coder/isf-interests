@@ -615,8 +615,12 @@ class App {
     // this.#map.setView(this.#coords, this.#farZoom, {
     //   animate: true,
     //   pan: { duration: 1 },
-    // });
-    this._panTo(arr[arr.length - 1].coords, this.#farZoom);
+    // // });
+    
+    // this._panTo(arr[arr.length - 1].coords, this.#farZoom);
+
+    // fit all markers in screen
+    this.#map.fitBounds(arr.map(m => m.coords));
   }
 }
 
