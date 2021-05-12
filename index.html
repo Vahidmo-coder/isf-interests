@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="shortcut icon" type="image/png" href="/icon.png" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="style.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+      integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+      crossorigin=""
+    />
+    <script
+      defer
+      src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+      integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+      crossorigin=""
+    ></script>
+
+    <!-- <script defer src="other.js"></script> -->
+    <script defer src="script.js"></script>
+    <title>Isfahan Interests App</title>
+  </head>
+  <body>
+    <div class="sidebar">
+      <!-- <img src="logo.png" alt="Logo" class="logo" /> -->
+
+      <form class="form__sort form__style">
+        <div class="form__row">
+          <select class="form__input form__input--sort">
+            <option value="all">All Interests</option>
+            <option value="historical">Historical</option>
+            <option value="religious">Religious</option>
+            <option value="recreational">Recreational</option>
+            <option value="art">Art</option>
+            <option value="Naqsh-e Jahan">Driver Guide 1</option>
+            <option value="Inside the Gates of Safavid Court">Driver Guide 2</option>
+            <option value="The Faint Glory of Seljuq Empire">Driver Guide 3</option>
+            <option value="The City of Minarets">Driver Guide 4</option>
+            <option value="Along Zayanderud River">Driver Guide 5</option>
+            <option value="Visiting the Other Side!">Driver Guide 6</option>
+            <option value="The City of Religions">Driver Guide 7</option>
+            <option value="Inside the Living Rooms of History">Driver Guide 8</option>
+            <option value="Let’s Take a Dip in History!">Driver Guide 9</option>
+            <option value="Zurkhaneh: Iranian Classic Workout">Driver Guide 10</option>
+            <option value="Sofeh: Isfahan’s Rooftop">Driver Guide 11</option>
+            <option value="Nazhvan: Land of Wildlife">Driver Guide 12</option>
+            <option value="Let’s Have Fun!">Driver Guide 13</option>
+          </select>
+          <button class="form__btn">OK</button>
+        </div>
+      </form>
+
+      <form class="form__timeline form__style">
+        <div class="form__row">
+          <a href="#timeline" class="form__modal interest_modal">🏛</a>
+          <select class="form__input form__input--timeline">
+            <option value="all" selected>---Timeline of Dynasties---</option>
+            <option value="Cont">Contemporary</option>
+            <option value="Pahlavi">Pahlavi</option>
+            <option value="Qajar">Qajar</option>
+            <option value="Safavi">Safavi</option>
+            <option value="Timuri">Timuri</option>
+            <option value="Ilkhanate">Ilkhanate</option>
+            <option value="Seljuq">Seljuq</option>
+            <option value="Buyid">Buyid</option>
+            <option value="Abasi">Abasi</option>
+            <option value="Sasani">Sasani</option>
+            <option value="Prehistory">Prehistory</option>
+          </select>
+          <button class="form__btn">OK</button>
+        </div>
+        <button class="form__btn">OK</button>
+      </form>
+
+      <ul class="interests">
+        <form class="form hidden">
+          
+          <div class="form__row">
+            <select class="form__input form__input--admission">
+              <option value="free">Free</option>
+              <option value="paid">Not-Free</option>
+              <option value="no-visit">No-Visit</option>
+            </select>
+          </div>
+          <div class="form__row">
+            <select class="form__input form__input--type">
+              <option value="historical">Historical</option>
+              <option value="religious">Religious</option>
+              <option value="recreational">Recreational</option>
+              
+              <option value="art">Artistic</option>
+            </select>
+          </div>
+
+          <div class="form__row">
+            <select class="form__input form__input--era">
+              <option value="Cont">Cont</option>
+              <option value="Prehistory">Prehistory</option>
+              <option value="Sasani">sasani</option>
+              <option value="Abasi">abasi</option>
+              <option value="Buyid">buyid</option>
+              <option value="Seljuq">seljuq</option>
+              <option value="Ilkhanate">ilkhanate</option>
+              <option value="Timuri">timuri</option>
+              <option value="Safavi">safavi</option>
+              <option value="Qajar">qajar</option>
+              <option value="Pahlavi">pahlavi</option>
+            </select>
+          </div>
+          <div class="form__row">
+            <input class="form__input form__input--emoji" placeholder="emoji" />
+          </div>
+          <div class="form__row">
+            <input class="form__input form__input--title" placeholder="name" />
+          </div>
+          <div class="form__row">
+            <input class="form__input form__input--time" placeholder="time" />
+          </div>
+
+          <button class="form__btn">OK</button>
+        </form>
+<!-- 
+          <li class="interest interest--religious" data-id="123124123">
+            
+            <div class="interest__category">Naqsh-e Jahan</div>
+            <h2 class="interest__title">🕌 The Shoh Mosque</h2>
+            <div class="interest__details">
+              <span class="interest__icon">🏛</span>
+              <span class="interest__text">Safavi</span>
+            </div>
+
+            <div class="interest__details">
+              <span class="interest__icon">⌚</span>
+              <span class="interest__text">9-5</span>
+            </div>
+            <div class="interest__details">
+              <span class="interest__icon">💲</span>
+              <span class="interest__text">Visit</span>
+            </div>
+            
+            <div class="interest__details">
+              <span class="interest__icon">🔗</span>
+              <a href="#" class="interest__link">more...</a>
+            </div>
+          </li>
+
+          <li class="interest interest--recreational" data-id="123124123">
+            <h2 class="interest__title">🍴 The Shoh Restaurant</h2>
+            
+            <div class="interest__details">
+
+            </div>
+            <div class="interest__details">
+              <span class="interest__icon">⌚</span>
+              <span class="interest__text">9-5</span>
+            </div>
+            <div class="interest__details">
+              <span class="interest__icon">💲</span>
+              <span class="interest__text">Visit</span>
+            </div>
+            <div class="interest__details">
+              <span class="interest__icon">🔗</span>
+              <a href="#"  class="interest__link">more</a>
+            </div>
+          </li>
+       -->
+    </div>
+    <div class="map__error hidden"></div>
+
+    <div id="map">
+    </div>
+
+    <div class="modal mo hidden">
+      <button class="btn--close-modal">&times;</button>
+      <div class="modal__content">
+        <img src="" alt="Driver Guide Plan" class="img--guide dgp--1">
+      </div>
+    <div class="loader "></div>
+    </div>
+    <div class="overlay hidden">
+    </div>
+  </body>
+</html>

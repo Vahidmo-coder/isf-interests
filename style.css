@@ -1,0 +1,444 @@
+:root {
+  --color-brand--1: #dd9a36;
+  --color-brand--3: #00c46a;
+  --color-brand--2: #33b1ff;
+  --color-brand--4: #f913f9;
+
+  --color-dark--1: #2d3439;
+  --color-dark--2: #42484d;
+  --color-dark--3: #141d23;
+  --color-light--1: #aaa;
+  --color-light--2: #ececec;
+  --color-light--3: rgb(214, 222, 224);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 50%;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Manrope', sans-serif;
+  color: var(--color-light--2);
+  font-weight: 400;
+  line-height: 1.6;
+  height: 100vh;
+  overscroll-behavior-y: none;
+
+  background-color: #fff;
+}
+
+/* GENERAL */
+
+a:link,
+a:visited {
+  color: var(--color-brand--1);
+}
+
+/* SIDEBAR */
+.sidebar {
+  flex-basis: 50rem;
+  background-color: var(--color-dark--1);
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.logo {
+  height: 5.2rem;
+  align-self: center;
+  margin-bottom: 4rem;
+}
+
+.interests {
+  list-style: none;
+  height: 77vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.interests::-webkit-scrollbar {
+  width: 0;
+}
+
+.interest {
+  background-color: var(--color-dark--2);
+  border-radius: 5px;
+  padding: 1.5rem 2.25rem;
+  margin-bottom: 1.75rem;
+  cursor: default;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 0.75rem 1.5rem;
+  padding-top: 0;
+}
+
+.select-color {
+  background-color: var(--color-dark--3);
+}
+
+.interest--religious {
+  border-left: 5px solid var(--color-brand--2);
+  border-right: 5px solid var(--color-brand--2);
+}
+.interest--recreational {
+  border-left: 5px solid var(--color-brand--3);
+  border-right: 5px solid var(--color-brand--3);
+}
+.interest--historical {
+  border-left: 5px solid var(--color-brand--1);
+  border-right: 5px solid var(--color-brand--1);
+}
+.interest--art {
+  border-left: 5px solid var(--color-brand--4);
+  border-right: 5px solid var(--color-brand--4);
+}
+
+.interest__title {
+  padding-top: 1rem;
+  font-size: 2rem;
+  font-weight: 600;
+  grid-column: 1 / -1;
+}
+
+.interest__category {
+  text-decoration: none;
+  border-radius: 0 0 50px 50px;
+  cursor: pointer;
+  padding: 2px;
+  background-color: var(--color-dark--1);
+  text-align: center;
+  color: var(--color-brand--1);
+  font-size: 1.7rem;
+  font-weight: 800;
+  grid-column: 1 / -1;
+  margin: 0;
+}
+.interest__category:hover {
+  color: var(--color-light--2);
+}
+
+.interest__details {
+  display: flex;
+  align-items: baseline;
+}
+
+.interest__text {
+  font-size: 1.5rem;
+  letter-spacing: 2px;
+}
+
+.interest__icon {
+  font-size: 1.8rem;
+  margin-right: 0.4rem;
+  height: 0.28rem;
+}
+
+.interest__link {
+  font-size: 1.5rem;
+  text-decoration: none;
+}
+
+.interest__link:hover {
+  color: var(--color-light--2);
+}
+
+.interest__content {
+  margin-left: 2px;
+}
+
+.form {
+  background-color: var(--color-dark--2);
+  border-radius: 5px;
+  padding: 1.5rem 2.75rem;
+  margin-bottom: 1.75rem;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem 2.5rem;
+
+  /* Match height and activity boxes */
+  transition: all 0.5s, transform 1ms;
+}
+
+.form__style {
+  background-color: var(--color-dark--2);
+  border-radius: 5px;
+  padding: 1.5rem 2.75rem;
+  margin-bottom: 1.75rem;
+
+  display: grid;
+  grid-template-columns: 1fr;
+
+  /* Match height and activity boxes */
+  transition: all 0.5s, transform 1ms;
+}
+
+.form.hidden {
+  transform: translateY(-30rem);
+  height: 0;
+  padding: 0 2.25rem;
+  margin-bottom: 0;
+  opacity: 0;
+}
+
+.form__row {
+  display: flex;
+  align-items: center;
+}
+
+.form__row--hidden {
+  display: none;
+}
+
+.form__label {
+  flex: 0 0 50%;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.form__input {
+  width: 100%;
+  padding: 0.3rem 1.1rem;
+  font-family: inherit;
+  font-size: 1.4rem;
+  border: none;
+  border-radius: 3px;
+  background-color: var(--color-light--3);
+  transition: all 0.2s;
+}
+
+.form__input:focus {
+  outline: none;
+  background-color: #fff;
+}
+
+.form__btn {
+  display: none;
+}
+
+.form__modal {
+  font-size: 2rem;
+  margin-right: 15px;
+  margin-left: 10px;
+}
+
+.copyright {
+  margin-top: auto;
+  font-size: 1.3rem;
+  text-align: center;
+  color: var(--color-light--1);
+}
+
+.twitter-link:link,
+.twitter-link:visited {
+  color: var(--color-light--1);
+  transition: all 0.2s;
+}
+
+.twitter-link:hover,
+.twitter-link:active {
+  color: var(--color-light--2);
+}
+
+/* MAP */
+#map {
+  flex: 1;
+  height: 100%;
+  background-color: var(--color-light--1);
+}
+
+.map__error {
+  margin-left: 0 auto;
+  background-color: var(--color-brand--1);
+  border: 2px solid red;
+  border-radius: 1rem;
+  font-weight: 700;
+  color: black;
+  height: 5rem;
+  min-width: 10rem;
+
+  position: fixed;
+  left: 35%;
+  bottom: 5rem;
+  z-index: 100000;
+  font-size: 1.8rem;
+  padding: 0.8rem 2rem;
+  transition: all 0.5s;
+  cursor: default;
+  height: 5.5rem;
+  text-align: center;
+}
+
+/*////////////////////////////////////////////////
+ Popup width is defined in JS using options 
+////////////////////////////////////////////////*/
+.leaflet-popup .leaflet-popup-content-wrapper {
+  background-color: var(--color-dark--1);
+  color: var(--color-light--2);
+  border-radius: 5px;
+  padding-right: 0.6rem;
+}
+
+.leaflet-popup .leaflet-popup-content {
+  font-size: 1.5rem;
+}
+
+.leaflet-popup .leaflet-popup-tip {
+  background-color: var(--color-dark--1);
+}
+
+.religious-popup .leaflet-popup-content-wrapper {
+  border-left: 5px solid var(--color-brand--2);
+  border-right: 5px solid var(--color-brand--2);
+}
+.historical-popup .leaflet-popup-content-wrapper {
+  border-left: 5px solid var(--color-brand--1);
+  border-right: 5px solid var(--color-brand--1);
+}
+
+.recreational-popup .leaflet-popup-content-wrapper {
+  border-left: 5px solid var(--color-brand--3);
+  border-right: 5px solid var(--color-brand--3);
+}
+.art-popup .leaflet-popup-content-wrapper {
+  border-left: 5px solid var(--color-brand--4);
+  border-right: 5px solid var(--color-brand--4);
+}
+
+.myposition-popup .leaflet-popup-content-wrapper {
+  border-left: 5px solid red;
+  border-right: 5px solid red;
+}
+
+.leaflet-popup .leaflet-popup-content {
+  font-size: 1.6rem;
+  margin: 13px 20px 13px 12px;
+}
+
+.popup-content {
+  margin-left: 3px;
+}
+
+.leaflet-popup-content {
+  cursor: pointer;
+}
+
+#map.leaflet-container a.leaflet-popup-close-button {
+  right: 5px;
+}
+
+/*////////////////////////////////////////////////
+ MODAL WINDOW
+///////////////////////////////////////////////// */
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--color-dark--3);
+  padding: 2rem;
+  box-shadow: 0 4rem 6rem rgba(0, 0, 0, 0.3);
+  z-index: 1001;
+  transition: all 0.5s;
+  min-width: 17rem;
+  min-height: 17rem;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(1.5px);
+  z-index: 1000;
+  transition: all 0.5s;
+}
+
+.modal__header {
+  font-size: 3.25rem;
+  margin-bottom: 4.5rem;
+  line-height: 1.5;
+}
+
+.btn--close-modal {
+  font-family: inherit;
+  color: inherit;
+  position: absolute;
+  top: 0.5rem;
+  right: 2rem;
+  font-size: 4rem;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.img--guide {
+  max-width: 66vh;
+  max-height: 100vh;
+}
+
+@media screen and (min-width: 580px) {
+  body {
+    display: flex;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  html {
+    font-size: 40%;
+  }
+  img {
+    width: 45vh;
+  }
+}
+
+@media screen and (max-width: 370px) {
+  html {
+    font-size: 33%;
+  }
+}
+
+/*////////////////////////////////////////////////
+ MODAL loader
+///////////////////////////////////////////////// */
+
+.loader {
+  position: absolute;
+  top: 40%;
+  right: 35%;
+  padding-top: 40px;
+  border: 5px solid #f3f3f3; /* Light grey */
+  border-top: 5px solid var(--color-brand--1); /* Blue */
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.hidden_loader {
+  visibility: hidden;
+  opacity: 0;
+}
