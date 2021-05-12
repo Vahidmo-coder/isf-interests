@@ -195,12 +195,12 @@ class App {
   }
 
   _loadMap(position) {
-    const latitude = 32.62530953459631;
-    const longitude = 51.67921111165265;
+    const lat = 32.62530953459631;
+    const lng = 51.67921111165265;
 
-    console.log(`https://www.google.com/maps/@${latitude},${longitude},14.74z`);
+    console.log(`https://www.google.com/maps/@${lat},${lng},14.74z`);
 
-    this.#coords = [latitude, longitude];
+    this.#coords = [lat, lng];
 
     this.#map = L.map('map').setView(this.#coords, this.#farZoom, {
       animate: true,
@@ -254,6 +254,7 @@ class App {
   }
 
   _panMyPosition() {
+    console.log(this.#myPos);
     if (this.#myPos) {
       this._panTo(this.#myPos._latlng, this.#closeZoom);
     }
@@ -379,7 +380,7 @@ class App {
   _renderList(interest) {
     let payEmoji;
     if (interest.admission == 'free') payEmoji = '🆓';
-    if (interest.admission == 'paid') payEmoji = '💰';
+    if (interest.admission == 'paid') payEmoji = '💲';
     if (interest.admission == 'no-visit') payEmoji = '⛔';
 
     const dGP = [
@@ -422,7 +423,7 @@ class App {
             }</span>
           </div>
           <div class="interest__details">
-            <span class="interest__icon">${payEmoji === '⛔' ? '' : '⏲'}</span>
+            <span class="interest__icon">${payEmoji === '⛔' ? '' : '⌚'}</span>
             <span class="interest__text">${interest.time}</span>
           </div>
           <div class="interest__details">
@@ -585,7 +586,7 @@ class App {
     ];
 
     if (condition === 'all') {
-      this._updateUI(this.#interests);
+      this.#sorted = this.#interests;
     } else {
       if (condition.includes(' ')) {
         this.#sorted = this.#interests.filter(i => i.dgp === `${condition}`);
@@ -602,17 +603,12 @@ class App {
     const condition = inputTimeline.value;
 
     if (condition === 'all') {
-      this._updateUI(this.#interests);
+      this.#sorted = this.#interests;
     } else {
       this.#sorted = this.#interests.filter(i => i.era === `${condition}`);
       this._updateUI(this.#sorted);
     }
-    this.#map
-      .setView(this.#sorted[0].coords, this.#farZoom, {
-        animate: true,
-        pan: { duration: 2 },
-      })
-      .panTo(this.#sorted[0].coords);
+    console.log(this.#sorted);
   }
 
   _updateUI(arr) {
@@ -623,10 +619,11 @@ class App {
     arr.forEach(i => this._renderList(i));
     arr.forEach(i => this._renderMarkers(i));
     containerInterests.firstElementChild.classList.add('select-color');
-    this.#map.setView(this.#coords, this.#farZoom, {
-      animate: true,
-      pan: { duration: 1 },
-    });
+    // this.#map.setView(this.#coords, this.#farZoom, {
+    //   animate: true,
+    //   pan: { duration: 1 },
+    // });
+    this._panTo(this.#sorted.reverse()[0].coords, this.#farZoom);
   }
 }
 
