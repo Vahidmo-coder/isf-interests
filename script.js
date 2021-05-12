@@ -48,7 +48,7 @@ class Interest {
 /////////////////////////////////
 // architecture
 class App {
-  #myPos;
+  #myPosMarker;
   #sorted = [];
   #popup;
   #popups = [];
@@ -194,11 +194,9 @@ class App {
     setTimeout(() => mapError.classList.add('hidden'), 5000);
   }
 
-  _loadMap(position) {
+  _loadMap() {
     const lat = 32.62530953459631;
     const lng = 51.67921111165265;
-
-    console.log(`https://www.google.com/maps/@${lat},${lng},14.74z`);
 
     this.#coords = [lat, lng];
 
@@ -223,20 +221,17 @@ class App {
     this.#map
       .getPanes()
       .popupPane.addEventListener('click', this._listPan.bind(this));
-
-    this._showMyPosition(position);
   }
 
   _showMyPosition(position) {
     if (position) {
-      this.#myPos = L.marker(
+      this.#myPosMarker = L.marker(
         [position.coords.latitude, position.coords.longitude],
         {
           icon: this._createIcon('red'),
+          riseOffset: 1000,
         }
-      );
-
-      this.#myPos
+      )
         .bindPopup(
           L.popup({
             maxWidth: 250,
@@ -254,11 +249,10 @@ class App {
   }
 
   _panMyPosition() {
-    console.log(this.#myPos);
-    if (this.#myPos) {
-      this._panTo(this.#myPos._latlng, this.#closeZoom);
+    if (this.#myPosMarker) {
+      this._panTo(this.#myPosMarker._latlng, this.#closeZoom);
     }
-    this.#myPos.openPopup();
+    this.#myPosMarker.openPopup();
   }
 
   _panTo(coords, zoom) {
@@ -586,7 +580,7 @@ class App {
     ];
 
     if (condition === 'all') {
-      this.#sorted = this.#interests;
+      this._updateUI(this.#interests);
     } else {
       if (condition.includes(' ')) {
         this.#sorted = this.#interests.filter(i => i.dgp === `${condition}`);
@@ -603,12 +597,11 @@ class App {
     const condition = inputTimeline.value;
 
     if (condition === 'all') {
-      this.#sorted = this.#interests;
+      this._updateUI(this.#interests);
     } else {
       this.#sorted = this.#interests.filter(i => i.era === `${condition}`);
       this._updateUI(this.#sorted);
     }
-    console.log(this.#sorted);
   }
 
   _updateUI(arr) {
@@ -623,7 +616,7 @@ class App {
     //   animate: true,
     //   pan: { duration: 1 },
     // });
-    this._panTo(this.#sorted.reverse()[0].coords, this.#farZoom);
+    this._panTo(arr[arr.length - 1].coords, this.#farZoom);
   }
 }
 
