@@ -608,7 +608,7 @@ class App {
       this._updateUI(this.#sorted);
     }
     this.#map
-      .setView(this.#sorted[0].coords, this.#closeZoom, {
+      .setView(this.#sorted[0].coords, this.#farZoom, {
         animate: true,
         pan: { duration: 2 },
       })
