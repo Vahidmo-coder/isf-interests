@@ -254,7 +254,6 @@ class App {
   }
 
   _panMyPosition() {
-    console.log(this.#myPos);
     if (this.#myPos) {
       this._panTo(this.#myPos._latlng, this.#closeZoom);
     }
