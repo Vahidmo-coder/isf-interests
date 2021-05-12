@@ -451,7 +451,7 @@ a:visited {
 }
 
 .my_position {
-  z-index: 10000;
+  z-index: 900;
   width: 6rem;
   height: 6rem;
   position: absolute;
